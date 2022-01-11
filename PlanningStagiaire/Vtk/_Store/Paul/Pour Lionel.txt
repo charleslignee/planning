@@ -1,0 +1,84 @@
+///////////////////////////////////////////////////////////////////
+////////////////////1) Création du maillage////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+Procedure Maillage
+	begin
+	  dz := (z_haut-z_bas)/nb_tranches; // Calcul du pas pour la hauteur
+	  Volume_tot := pi *(sqr(r_ext)-sqr(r_int))*(z_haut-z_bas);
+	  Vol_el := Volume_tot/(nb_cylindres*nb_tranches); // Calcul du volume élémentaire = constante.
+
+	  for ii := 1 to nb_tranches do // Horizontale, dr, lignes
+		begin
+		  for jj := 1 to nb_cylindres do // Verticale, dz, colonnes
+			begin
+			  if jj = 1 then // Première colonne
+				begin
+				  VER[ii,jj].r_int := r_int;
+				end
+			  else // Autres colonnes
+				begin
+				  VER[ii,jj].r_int := VER[ii,jj-1].r_ext;
+				end;
+				VER[ii,jj].r_ext := sqrt(sqr(VER[ii,jj].r_int) + (Vol_el/(pi*dz)));
+				VER[ii,jj].dr := VER[ii,jj].r_ext - VER[ii,jj].r_int; // Calcul du dr de chaque volume
+				VER[ii,jj].Vol := pi*(sqr(VER[ii,jj].r_ext)-sqr(VER[ii,jj].r_int))*dz; // Volume total (bois + vapeur + liquide)
+				VER[ii,jj].hauteur := z_haut - 0.5*dz-(ii-1)*dz;
+				VER[ii,jj].z_haut := z_haut - (ii-1)*dz;
+				VER[ii,jj].z_bas := z_haut - 1*dz - (ii-1)*1*dz;
+			  if centre_vol = 'centre' then
+				VER[ii,jj].Rayon := VER[ii,jj].r_ext-VER[ii,jj].dr/2
+			  else // Barycentre massique
+				VER[ii,jj].Rayon :=sqrt(0.5*(sqr(VER[ii,jj].r_ext)+sqr(VER[ii,jj].r_int)));
+		  end; // Fin boucle jj
+		end;// Fin boucle ii
+	end; // Fin maillage
+
+///////////////////////////////////////////////////////////////////
+////////////////////2) Ecriture des coordonnées////////////////////
+///////////////////////////////////////////////////////////////////
+
+Procedure Sauver_coord // Ecriture des coordonnées de chaque volume
+    begin
+      for ii := 1 to nb_tranches do
+        begin
+          for jj :=1 to nb_cylindres do
+            begin
+			  writeln(f_coord,Pos_ii,#9,pos_jj,#9, VER[ii,jj].r_ext:0:5,#9,
+													VER[ii,jj].r_int:0:5,#9,
+													VER[ii,jj].rayon:0:5, #9,
+													VER[ii,jj].dr:0:5,#9,
+													VER[ii,jj].hauteur:0:5, #9,
+													VER[ii,jj].z_haut:0:5, #9, 
+													VER[ii,jj].z_bas:0:5);
+			end;
+		end;
+	end;
+	
+///////////////////////////////////////////////////////////////////
+////////////////////3) Ecriture variables//////////////////////////
+///////////////////////////////////////////////////////////////////
+
+procedure Sauver_var_dyn; // Ecriture des varaibles
+    Var
+      ii : integer;
+      jj : integer;
+      nom : string;
+    begin
+      nom := 'Resultat_'+FloatToStr(iter_sauv)+'.txt';
+      writeln(nom);
+      Assignfile(f_res,nom); // On créé des fichiers des résultats.
+      writeln(liste_f,'Resultat_'+FloatToStr(iter_sauv)+'.txt');
+      rewrite(f_res); // On ré-écrit sur le fichier.
+       // On écrit sur le fichier liste
+      for ii := 1 to nb_tranches do
+          begin
+            for jj :=1 to nb_cylindres do
+                begin
+					writeln(f_res, VER[ii,jj].av.X:0:10,#9, VER[ii,jj].av.T:0:4,#9, VER[ii,jj].av.phi:0:6);
+                end;
+		   end;
+	   end;
+	end;
+	

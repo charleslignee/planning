@@ -1,0 +1,13 @@
+\\\ Journées de travail avec type de tâches et leur durées (suivre les instruction du fichier 'README.md)
+
+Date:Jan3 visite_labo:2 explication_projet:1.5 bibliographie:3.5
+
+Date:Jan4 bibliographie:6.5 code_articlereview:1
+
+Date:Jan5 bibliographie:7.5 code_articlereview:2
+
+Date:Jan6 bibliographie:3
+
+Date:Jan7 reunion_laboratoire_PIMENT:1h code_conductivite2D:5
+
+Date:Jan10 code_planning:1h|création du code
