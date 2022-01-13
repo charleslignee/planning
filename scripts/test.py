@@ -1,11 +1,19 @@
+# %%
+import pandas as pd
+import matplotlib.pyplot as plt
 
-#%%
-input_data = {}
-lign = "Jan4=bibliographie:6.5h;code_articlereview:1h|appropriation du code & de l'outil git #2e journée de travail"
-if "=" in lign:
-    list_content = []                      
-    for content in lign.split('=')[1].split('#')[0].split(';'):
-        list_content.append(content.split('|')[0].split(':'))
-    input_data.update({lign.split('=')[0]:list_content})
+years=["2015","2016","2017","2018","2019"]
+data={
+    "Python":[50,60,70,80,100],
+    "JavaScript":[20,20,20,20,0],
+    "C++":[30,20,10,0,0],
+}
+
+df=pd.DataFrame(data,index=years)
+
+df.plot(kind="bar",stacked=True,figsize=(10,8))
+plt.legend(loc="lower left",bbox_to_anchor=(0.8,1.0))
+plt.show()
+
 
 # %%
