@@ -28,18 +28,8 @@ class ReadInput():
     
     
     ## Initialisation de la classe et lancement de deux méthodes
-    def __init__(self, connexionFile = "BddParamIn.txt"):
-
-        ''' Initialisation de la classe et déclaration des attributs.
-            La lecture du fichier de connexion est effectué au cours
-            de l'initialisation ainsi qu l'établissement du point de
-            connexion vers la base est crée.
-
-        Arguments optionnel
-        -------------------
-            connexionFile [str] : nom du fichier des paramètres de connexion 
-        '''        
-        self.fileName = 'init'
+    def __init__(self):
+        pass
         
 
     def ImportInput(self,file_name):
@@ -63,15 +53,3 @@ class ReadInput():
                     inputData = pd.concat([inputData,pd.DataFrame(pd.Series(ticket)).T])
         
         return inputData
-
-                       
-    
-   
-
-
-
-# Programme de test de la classe
-if __name__=='__main__':
-    fileName = 'input_test.txt'
-    to = ReadInput()
-    to._ReadParam(fileName)

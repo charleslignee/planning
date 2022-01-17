@@ -6,9 +6,10 @@
 # ---------------------
 import os
 from PlanningStagiaire.ReadInput import ReadInput
+from PlanningStagiaire.DiagramTools import DiagramTools
 
 
-class PlanningStagiaire(ReadInput):
+class PlanningStagiaire(ReadInput, DiagramTools):
 
     def __init__(self):
         ReadInput.__init__(self)
