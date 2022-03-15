@@ -1,7 +1,7 @@
 # Article_review
 Elaboration du planning du stagiaire.
 A partir du document rempli par le stagiaire, on réalise un traitement pour générer des figures représentatives de l'organisation du travail effectué par le stagiaire.
-Dans le document '.txt', les types de tâche et leur durée comportent une codification au travers de mots clé pour établir une codification.
+Dans le document '.txt', les types de tâche et leur durée comportent une codification au travers de mots clé pour établir une codification. aaaaaa
 
 
 ## Codification : séparateurs
